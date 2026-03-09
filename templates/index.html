@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLCS Programme CSV Separator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>📄 CLCS Programme CSV Separator</h1>
+            <p>Efficiently separate CSV data by programme</p>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Upload Section -->
+            <div class="card upload-card">
+                <h2>📁 Upload CSV File</h2>
+                <div class="upload-area" id="uploadArea">
+                    <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    <p class="upload-text">Drag and drop your CSV file here or click to select</p>
+                    <input type="file" id="fileInput" accept=".csv" hidden>
+                </div>
+                <div id="fileInfo" class="file-info" style="display: none;">
+                    <span id="fileName"></span>
+                    <span id="fileSize"></span>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="button-group">
+                <button id="processBtn" class="btn btn-success" disabled>
+                    ▶ Process File
+                </button>
+                <button id="clearBtn" class="btn btn-secondary">
+                    🗑️ Clear
+                </button>
+            </div>
+
+            <!-- Status Section -->
+            <div id="statusSection" class="status-section" style="display: none;">
+                <div class="spinner"></div>
+                <p>Processing file...</p>
+            </div>
+
+            <!-- Output Section -->
+            <div class="card output-card" id="outputCard" style="display: none;">
+                <h2>📊 Results</h2>
+                <div id="outputContent" class="output-content"></div>
+            </div>
+
+            <!-- Files List Section -->
+            <div class="card files-card" id="filesCard" style="display: none;">
+                <h2>📑 Generated Files</h2>
+                <div id="filesList" class="files-list"></div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>© 2024 CLCS Programme Separator • Ready to process</p>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
