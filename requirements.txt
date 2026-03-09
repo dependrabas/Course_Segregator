@@ -1,0 +1,3 @@
+# No external dependencies needed - tkinter comes with Python
+# If you still want to use PySimpleGUI, uncomment the line below:
+# PySimpleGUI>=4.60.0
