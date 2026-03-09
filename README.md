@@ -75,9 +75,12 @@ http://localhost:5000
 3. **Configure Render Settings**:
    - **Name**: `clcs-programme-separator` (or your choice)
    - **Environment**: `Python 3`
-   - **Build Command**: `pip install -r requirements.txt`
+   - **Build Command**: `pip install -r requirements.txt && mkdir -p uploads output`
    - **Start Command**: `gunicorn app:app`
    - **Plan**: Free (or paid if you want better performance)
+   - **IMPORTANT**: Make sure you're using the correct settings:
+     - NOT a Static Site (Flask is a web app, not static HTML)
+     - This should be a "Web Service" for Python
 
 4. **Set Environment Variables** (if needed):
    - Add in Render dashboard under "Environment"
@@ -126,19 +129,37 @@ Bachelor of Arts in Language and Heritage Studies, Bachelor of Arts in History a
 
 ### Render Deployment Issues
 
+**"Publish directory build does not exist"**:
+- ❌ You selected the wrong service type (Static Site instead of Web Service)
+- ✅ **Solution**: Go to Dashboard → New Web Service → Select your repository
+- ✅ Make sure to choose **Python 3** environment, NOT static site
+- ✅ Set Build Command: `pip install -r requirements.txt && mkdir -p uploads output`
+- ✅ Set Start Command: `gunicorn app:app`
+
 **Build fails with "ModuleNotFoundError"**:
 - Ensure all dependencies are listed in `requirements.txt`
 - Run `pip freeze > requirements.txt` locally to update
+- Check that pandas, Flask, and gunicorn are all included
 
 **App crashes on startup**:
-- Check logs in Render dashboard
+- Check logs in Render dashboard (click on the service, then Logs)
 - Ensure `Procfile` is present and correct
-- Make sure Flask runs on `0.0.0.0` (not `localhost`)
+- Make sure Flask runs on `0.0.0.0:$PORT` (Render assigns PORT dynamically)
+- Verify `app.py` has: `app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))`
 
 **Files not persisting**:
 - Render's free tier has ephemeral file systems
-- Generated files are temporary
-- For persistent storage, consider upgrading or using external storage
+- Generated files are temporary and deleted on redeploy
+- For persistent storage, consider:
+  - Upgrading to paid plan
+  - Using S3 or other cloud storage
+  - Using a database
+
+**502 Bad Gateway error**:
+- Check that gunicorn is installed in requirements.txt
+- Verify Start Command is exactly: `gunicorn app:app`
+- Check Render logs for specific error messages
+
 
 ### Local Issues
 
